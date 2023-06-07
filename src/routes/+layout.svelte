@@ -5,8 +5,8 @@
         </a>
     </div>
     <h1>What if?</h1>
-    <p class="announcement">Let's imagine how your company will look like in the
-        <a href="https://en.wikipedia.org/wiki/Large_language_model">large language models</a> era.</p>
+    <p class="announcement">Let's imagine how your company will look like in the era of
+        <a href="https://en.wikipedia.org/wiki/Large_language_model">large language models</a>.</p>
 </header>
 
 <div class="page-container">
@@ -26,7 +26,6 @@
     header {
         margin-left: 5em;
         margin-right: 5em;
-        margin-bottom: 3em;
     }
 
     .logo-container {
@@ -43,6 +42,7 @@
 
     h1 {
         font-size: xxx-large;
+        margin-top: 0;
 
         text-align: center;
         white-space: nowrap;

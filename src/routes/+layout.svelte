@@ -1,6 +1,6 @@
 <header>
     <div class="logo-container">
-        <a href="https://chimplie.com" class="logo">
+        <a href="https://chimplie.com" title="Open Chimplie website" class="logo">
             <img alt="Chimplie" src="/logo.png" class="logo"/>
         </a>
     </div>

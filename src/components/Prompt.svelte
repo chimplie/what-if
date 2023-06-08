@@ -19,63 +19,62 @@
         <ResizableTextArea
                 bind:value={value}
                 minRows={2}
-                maxRows={5}
+                maxRows={10}
         />
     </div>
     <div class="send-container">
-        <button on:click={post} class="send-btn" disabled="{value === ''}">
-            {#if value !== ''}
-                <img alt="send" src="/send-96.png"/>
-            {/if}
-            {#if value === ''}
-                <img alt="send" src="/send-96-inactive.png"/>
-            {/if}
+        <button
+                title="Send message"
+                class="send-btn"
+                on:click={post}
+                disabled="{value === ''}"
+        >
         </button>
     </div>
 </div>
 
 <style>
     .component {
-        display: flex;
         font-family: monospace;
         text-align: left;
     }
 
     .input-container {
-        flex-grow: 1;
-        max-width: 95%;
+        display: inline-block;
+        margin: 0 auto;
+        width: 100%;
     }
 
     .send-container {
-        display: block;
-        margin-left: 8px;
-        width: 48px;
-        overflow-x: clip;
-        position: relative;
+        display: inline-block;
+        width: 100%;
+        overflow-x: visible;
     }
 
     .send-btn {
-        position: absolute;
-        bottom: 0;
-        display: block;
+        position: relative;
+        bottom: 48px;
+        right: -56px;
+        float: right;
         cursor: pointer;
         border: none;
-        background: none;
         width: 48px;
         height: 48px;
         vertical-align: bottom;
         margin: 0;
         padding: 0;
         overflow: hidden;
+        background-color: unset;
+        background-image: url("/send-96-rotated.png");
+        background-size: 48px;
+    }
+
+    .send-btn:hover {
+        background-image: url("/send-96.png");
     }
 
     .send-btn:disabled {
         cursor: default;
-    }
-
-    .send-btn img {
-        height: 48px;
-        width: auto;
-        vertical-align: bottom;
+        background-image: url("/send-96-rotated-inactive.png");
     }
 </style>

@@ -71,7 +71,12 @@
 </script>
 
 <div class="toolbar">
-    <button on:click={resetState} class="reset-btn" disabled={chatHistory.isEmpty()}>
+    <button
+            title="Reset conversation"
+            class="reset-btn"
+            on:click={resetState}
+            disabled={chatHistory.isEmpty()}
+    >
         {#if !chatHistory.isEmpty()}
             <img alt="reset" src="/reset-100.png"/>
         {/if}
@@ -139,10 +144,16 @@
     }
 
     .toolbar {
-        text-align: right;
+        display: inline-block;
+        width: 100%;
+        height: 0;
+        overflow-x: visible;
     }
 
     .reset-btn {
+        position: relative;
+        right: -33px;
+        float: right;
         cursor: pointer;
         border: none;
         background: none;
@@ -150,8 +161,16 @@
         padding: 0;
     }
 
+    .reset-btn:hover {
+        background-image: url("/selected-100.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 50px;
+    }
+
     .reset-btn:disabled {
         cursor: default;
+        background: none;
     }
 
     .reset-btn, .reset-btn img {

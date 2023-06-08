@@ -4,6 +4,7 @@
             <img alt="Chimplie" src="/logo.png" class="logo"/>
         </a>
     </div>
+    <a class="github-link" title="Open in GitHub" href="https://github.com/chimplie/what-if"><span></span></a>
     <h1>What if?</h1>
     <p class="announcement">Let's imagine how your company will look like in the era of
         <a href="https://en.wikipedia.org/wiki/Large_language_model">large language models</a>.</p>
@@ -42,6 +43,24 @@
     .logo {
         width: 160px;
         height: auto;
+    }
+
+    .github-link {
+        position: relative;
+        float: right;
+        top: 20px;
+        width: 50px;
+        height: 50px;
+        background-image: url("/github-100-inactive.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 40px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .github-link:hover {
+        background-image: url("/github-100.png");
     }
 
     h1 {

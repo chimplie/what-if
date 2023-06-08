@@ -7,7 +7,7 @@
 		"node": ">=18.0.0 <19.0.0"
 	},
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vavite-loader vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"test": "playwright test",
@@ -23,6 +23,7 @@
 		"@sveltejs/kit": "^1.5.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
+		"@vavite/node-loader": "^1.8.1",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.26.0",

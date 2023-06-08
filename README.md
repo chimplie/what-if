@@ -51,3 +51,9 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+Useful Links
+------------
+
+- How to [set up an IDE](https://www.codelantis.com/blog/sveltekit-server-debugging-vscode-webstorm).
+- Free icons with customisation could be found in [icons8.com](https://icons8.com/). 

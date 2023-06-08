@@ -7,8 +7,17 @@
     let userInput = "";
     let chatHistory = new ChatHistory();
 
-    async function handlePost(event) {
-        chatHistory.add(new Message(event.detail.text, MessageType.HumanMessage));
+    onMount(async () => {
+        if (chatHistory.isAITurn()) {
+            await receiveAIResponse();
+        }
+
+        // Scroll to the very bottom of the chat
+        chatElement.scrollTo(0, chatElement.scrollHeight);
+    })
+
+    async function handleMessagePost(event) {
+        chatHistory.addMessage(new Message(event.detail.text, MessageType.HumanMessage));
         userInput = '';
         // Refresh history
         chatHistory = chatHistory;
@@ -19,21 +28,28 @@
         chatElement.scrollTo(0, chatElement.scrollHeight);
 
         // Get response from AI
-        await getAIResponse();
+        await receiveAIResponse();
     }
 
-    async function getAIResponse() {
+    async function receiveAIResponse() {
         const response = await fetch('/chat', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(chatHistory.getHistory()),
+            body: JSON.stringify({
+                messages: chatHistory.getMessages(),
+                metadata: chatHistory.getMetadata(),
+            }),
         });
-        const aiMessage = await response.json();
 
-        chatHistory.add(new Message(aiMessage, MessageType.AIMessage));
+        const data = await response.json();
+        const aiMessage = data['message'];
+        const metadata = data['metadata'];
+
+        chatHistory.addMessage(new Message(aiMessage, MessageType.AIMessage));
+        chatHistory.setMetadata(metadata);
         // Refresh history
         chatHistory = chatHistory;
         // Await UI update
@@ -42,7 +58,7 @@
         chatElement.scrollTo(0, chatElement.scrollHeight);
     }
 
-    async function resetHistory() {
+    async function resetState() {
         chatHistory.reset();
         // Refresh history
         chatHistory = chatHistory;
@@ -50,21 +66,12 @@
         await tick();
 
         // Get response from AI
-        await getAIResponse();
+        await receiveAIResponse();
     }
-
-    onMount(async () => {
-        if (chatHistory.isAITurn()) {
-            await getAIResponse();
-        }
-
-        // Scroll to the very bottom of the chat
-        chatElement.scrollTo(0, chatElement.scrollHeight);
-    })
 </script>
 
 <div class="toolbar">
-    <button on:click={resetHistory} class="reset-btn" disabled={chatHistory.isEmpty()}>
+    <button on:click={resetState} class="reset-btn" disabled={chatHistory.isEmpty()}>
         {#if !chatHistory.isEmpty()}
             <img alt="reset" src="/reset-100.png"/>
         {/if}
@@ -75,7 +82,7 @@
 </div>
 
 <div class="chat" bind:this={chatElement}>
-    {#each chatHistory.getHistory() as message}
+    {#each chatHistory.getMessages() as message}
         <div class="message">
             <div class="actor">
                 <div class="actor-name">
@@ -113,14 +120,24 @@
         <img alt="..." src="/fontain-preloader.svg">
     </div>
 {/if}
-
 {#if chatHistory.isHumanTurn()}
     <Prompt bind:value={userInput}
-            on:post={handlePost}
+            on:post={handleMessagePost}
     />
 {/if}
 
 <style>
+    .chat {
+        border-color: #55595d;
+        border-style: solid;
+        height: 50%;
+        max-height: 240px;
+        padding: 2em;
+        margin-bottom: 2em;
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+    }
+
     .toolbar {
         text-align: right;
     }
@@ -140,17 +157,6 @@
     .reset-btn, .reset-btn img {
         width: 25px;
         height: 25px;
-    }
-
-    .chat {
-        border-color: #55595d;
-        border-style: solid;
-        height: 50%;
-        max-height: 240px;
-        padding: 2em;
-        margin-bottom: 2em;
-        overflow-y: scroll;
-        scroll-behavior: smooth;
     }
 
     .message {

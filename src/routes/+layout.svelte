@@ -10,7 +10,11 @@
 </header>
 
 <div class="page-container">
-    <slot/>
+<!--    <span class="spacing"></span>-->
+    <div class="page-contents">
+        <slot/>
+    </div>
+<!--    <span class="spacing"></span>-->
 </div>
 
 <style>
@@ -53,7 +57,13 @@
     }
 
     .page-container {
-        margin-left: 5em;
-        margin-right: 5em;
+        /*display: flex;*/
+        justify-content: center;
+    }
+
+    .page-contents {
+        margin: 0 auto;
+        max-width: 70%;
+        min-width: 400px;
     }
 </style>
